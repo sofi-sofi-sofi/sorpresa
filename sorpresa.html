@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Una Giornata Tutta Nostra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #f5efe0;
+    min-height: 100vh;
+    padding: 2rem 1rem 3rem;
+    font-family: 'IM Fell English', serif;
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(139,90,43,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(139,90,43,0.07) 0%, transparent 60%);
+  }
+
+  .title-area {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .ornament {
+    color: #8b5a2b;
+    font-size: 1.5rem;
+    letter-spacing: 0.4rem;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #3d1f00;
+    font-style: italic;
+    letter-spacing: 0.05em;
+    text-shadow: 1px 1px 0 rgba(139,90,43,0.2);
+  }
+
+  .subtitle {
+    color: #7a5230;
+    font-size: 0.95rem;
+    margin-top: 0.4rem;
+    font-style: italic;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1.2rem auto 0;
+    max-width: 300px;
+    color: #8b5a2b;
+  }
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #8b5a2b, transparent);
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .card-wrapper {
+    perspective: 1000px;
+    height: 290px;
+    cursor: pointer;
+  }
+
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-wrapper.flipped .card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    border: 1.5px solid #b8934a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: #fdf6e3;
+    box-shadow: inset 0 0 40px rgba(139,90,43,0.06), 0 2px 8px rgba(100,60,10,0.12);
+  }
+
+  .card-front::before, .card-back::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 0.5px solid rgba(184,147,74,0.35);
+    border-radius: 8px;
+    pointer-events: none;
+  }
+
+  .card-front::after, .card-back::after {
+    content: '✦';
+    position: absolute;
+    top: 12px; left: 16px;
+    font-size: 10px;
+    color: #b8934a;
+    opacity: 0.6;
+  }
+
+  .card-back {
+    transform: rotateY(180deg);
+    background: #fdf0d0;
+  }
+
+  .card-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.72rem;
+    color: #8b5a2b;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    font-style: italic;
+    opacity: 0.8;
+  }
+
+  .card-icon {
+    font-size: 3rem;
+    color: #5c3510;
+    margin-bottom: 1rem;
+    line-height: 1;
+  }
+
+  .card-question {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: #3d1f00;
+    text-align: center;
+    font-style: italic;
+  }
+
+  .card-hint {
+    margin-top: 1rem;
+    font-size: 0.72rem;
+    color: #a07040;
+    font-style: italic;
+    opacity: 0.7;
+  }
+
+  .card-back-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: #3d1f00;
+    text-align: center;
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  .card-back-text em {
+    font-size: 0.82rem;
+    color: #7a5230;
+    display: block;
+    margin-top: 0.5rem;
+    font-style: normal;
+    letter-spacing: 0.04em;
+  }
+
+  .seal {
+    margin-top: 1.2rem;
+    width: 32px;
+    height: 32px;
+    background: #8b1a1a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fdf6e3;
+    font-size: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  }
+
+  .footer-note {
+    text-align: center;
+    margin-top: 3rem;
+    color: #9a7040;
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+  .footer-note span {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.3rem;
+    color: #b8934a;
+  }
+
+  @media (max-width: 500px) {
+    .main-title { font-size: 1.5rem; }
+    .cards-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .card-wrapper { height: 240px; }
+    .card-icon { font-size: 2.2rem; }
+    .card-question { font-size: 1rem; }
+    .card-back-text { font-size: 0.9rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="title-area">
+    <span class="ornament">~ ✦ ~</span>
+    <h1 class="main-title">Una Giornata Tutta Nostra</h1>
+    <p class="subtitle">Gira le carte per scoprire i tuoi indizi</p>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span style="font-size:0.7rem; letter-spacing:0.2rem; color:#b8934a;">❧</span>
+      <div class="divider-line"></div>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+
+    <div class="card-wrapper" onclick="this.classList.toggle('flipped')">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-label">Dove</div>
+          <div class="card-icon"><i class="ti ti-map-pin"></i></div>
+          <div class="card-question">Dove andiamo?</div>
+          <div class="card-hint">— tocca per scoprire —</div>
+        </div>
+        <div class="card-back">
+          <div class="card-label">Rivelato</div>
+          <div class="card-back-text">Segreto!<br><em>Ma lo scoprirai quella mattina</em></div>
+          <div class="seal">✦</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-wrapper" onclick="this.classList.toggle('flipped')">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-label">Quando</div>
+          <div class="card-icon"><i class="ti ti-clock"></i></div>
+          <div class="card-question">Quando partiamo?</div>
+          <div class="card-hint">— tocca per scoprire —</div>
+        </div>
+        <div class="card-back">
+          <div class="card-label">Rivelato</div>
+          <div class="card-back-text">Sabato 16 maggio,<br>tutto il giorno</div>
+          <div class="seal">✦</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-wrapper" onclick="this.classList.toggle('flipped')">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-label">Cosa ti serve</div>
+          <div class="card-icon"><i class="ti ti-backpack"></i></div>
+          <div class="card-question">Cosa porto?</div>
+          <div class="card-hint">— tocca per scoprire —</div>
+        </div>
+        <div class="card-back">
+          <div class="card-label">Rivelato</div>
+          <div class="card-back-text">Tanto amore e uno zaino con telefono, acqua e cuffie.<br><em>Non pensare a nient'altro</em></div>
+          <div class="seal">✦</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-wrapper" onclick="this.classList.toggle('flipped')">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-label">Quanto costa</div>
+          <div class="card-icon"><i class="ti ti-coin"></i></div>
+          <div class="card-question">Devo portare soldi?</div>
+          <div class="card-hint">— tocca per scoprire —</div>
+        </div>
+        <div class="card-back">
+          <div class="card-label">Rivelato</div>
+          <div class="card-back-text">Niente, ovviamente!</div>
+          <div class="seal">✦</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-wrapper" onclick="this.classList.toggle('flipped')">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-label">Con chi</div>
+          <div class="card-icon"><i class="ti ti-heart"></i></div>
+          <div class="card-question">Con chi vengo?</div>
+          <div class="card-hint">— tocca per scoprire —</div>
+        </div>
+        <div class="card-back">
+          <div class="card-label">Rivelato</div>
+          <div class="card-back-text">Con la tua patapolla</div>
+          <div class="seal">♥</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-note">
+    <span>~ ❧ ~</span>
+    Ogni risposta è un passo verso di te
+  </div>
+</body>
+</html>
